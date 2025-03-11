@@ -11,6 +11,7 @@
 
 typedef struct	s_list
 {
+	int				fd;
 	char			*str_buf;
 	struct s_list	*next;
 }				t_list
