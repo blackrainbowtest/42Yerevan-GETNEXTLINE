@@ -10,7 +10,7 @@
 # include <fcntl.h>
 # include <limits.h>
 
-typedef struct	s_list
+typedef struct s_list
 {
 	int				fd;
 	char			*str_buf;
