@@ -9,6 +9,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <stdio.h>
 
 typedef struct s_list
 {
@@ -17,6 +18,8 @@ typedef struct s_list
 	struct s_list	*next;
 }				t_list;
 
+char	*get_next_line(int fd);
+char	*ft_strdup(const char *s);
 t_list	*get_or_create_node(t_list	**p_head, int fd);
 
 #endif

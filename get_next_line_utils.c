@@ -1,5 +1,27 @@
 #include "get_next_line.h"
 
+char	*ft_strdup(const char *s)
+{
+	char	*str;
+	size_t	len;
+	size_t	i;
+
+	len = 0;
+	while (s && s[len])
+		len++;
+	str = (char *)malloc(len + 1);
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
 t_list	*get_or_create_node(t_list	**p_head, int fd)
 {
 	t_list	*node;
@@ -15,12 +37,7 @@ t_list	*get_or_create_node(t_list	**p_head, int fd)
 	if (node == NULL)
 		return (NULL);
 	node->fd = fd;
-	node->str_buf = ft_strdup("");
-	if (node->str_buf == NULL)
-	{
-		free(node);
-		return (NULL);
-	}
+	node->str_buf = NULL;
 	node->next = *p_head;
 	*p_head = node;
 	return (node);
