@@ -26,7 +26,16 @@ void	ft_delete_node(t_list **p_head, int fd)
 
 char	*ft_read_line(t_list *node)
 {
+	ssize_t			bts_rd;
 
+	bts_rd = read(node->fd, node->str_buf, BUFFER_SIZE);
+	if (bts_rd == -1 || (bts_rd == 0 && node->str_buf[0] == '\0'))
+	{
+		ft_delete_node(&p_head, fd);
+		return (NULL);
+	}
+	
+	return (NULL);
 }
 
 char	*get_next_line(int fd)
@@ -43,7 +52,5 @@ char	*get_next_line(int fd)
 	bts_rd = read(0, node->str_buf, 0);
 	if (bts_rd == -1)
 		return (NULL);
-
-	printf("fd: %d\n", fd);
-	return (NULL);
+	return (ft_read_line(node));	
 }
