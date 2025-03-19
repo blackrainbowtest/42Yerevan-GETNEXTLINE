@@ -22,23 +22,60 @@ char	*ft_strdup(const char *s)
 	return (str);
 }
 
-t_list	*get_or_create_node(t_list	**p_head, int fd)
+size_t	ft_strlen(const char *s)
 {
-	t_list	*node;
+	size_t	len;
 
-	node = *p_head;
-	while (node)
+	len = 0;
+	while (s && s[len])
+		len++;
+	return (len);
+}
+
+void	ft_strcpy(char *dst, const char *src)
+{
+	size_t	i;
+
+	i = 0;
+	while (src && src[i])
 	{
-		if (node->fd == fd)
-			return (node);
-		node = node->next;
+		dst[i] = src[i];
+		i++;
 	}
-	node = (t_list *)malloc(sizeof(t_list));
-	if (node == NULL)
+	dst[i] = '\0';
+}
+
+void	ft_strcat(char *dst, const char *src)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (dst && dst[i])
+		i++;
+	j = 0;
+	while (src && src[j])
+	{
+		dst[i + j] = src[j];
+		j++;
+	}
+	dst[i + j] = '\0';
+}
+
+char	*ft_joinstr(const char *s1, const char *s2)
+{
+	size_t	len1;
+	size_t	len2;
+	char	*result;
+
+	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	node->fd = fd;
-	node->str_buf = ft_strdup("");
-	node->next = *p_head;
-	*p_head = node;
-	return (node);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	result = (char *)malloc(len1 + len2 + 1);
+	if (result == NULL)
+		return (NULL);
+	ft_strcpy(result, s1);
+	ft_strcat(result, s2);
+	return (result);
 }

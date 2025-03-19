@@ -25,11 +25,11 @@ clean:
 	$(HIDE)rm -f $(OBJS)
 
 fclean: clean
-	$(HIDE)rm -f $(NAME) my_program
+	$(HIDE)rm -f $(NAME)
 
-test: re
+test: all
 	$(HIDE)printf "%s" "$(YELLOW)Start compiling: $(RESET)["
-	$(HIDE)$(CC) main.c $(NAME) -o my_program
+	$(HIDE)$(CC) main.c gnl_tester.a -o my_program
 	$(HIDE)printf "%s\n" "$(GREEN)OK$(RESET)]"
 	$(HIDE)./my_program test_file1.txt test_file2.txt test_file3.txt
 	$(HIDE)printf "%s" "$(BLUE)Cleaning files: $(RESET)"

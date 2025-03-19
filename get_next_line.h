@@ -19,8 +19,14 @@ typedef struct s_list
 }				t_list;
 
 char	*get_next_line(int fd);
-char	*ft_strdup(const char *s);
+char	*ft_read_line(t_list *p_head, t_list *node, int fd);
 t_list	*get_or_create_node(t_list	**p_head, int fd);
 void	ft_delete_node(t_list **p_head, int fd);
+
+char	*ft_joinstr(const char *s1, const char *s2);
+size_t	ft_strlen(const char *s);
+char	*ft_strdup(const char *s);
+void	ft_strcpy(char *dst, const char *src);
+void	ft_strcat(char *dst, const char *src);
 
 #endif

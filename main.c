@@ -5,6 +5,7 @@ int	main(int argc, char **argv)
 	int		fd;
 	char	*line;
 
+	
 	if (argc < 2) 
 	{
 		printf("Usage: %s <filename> ...\n", argv[0]);
@@ -17,8 +18,10 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	line = get_next_line(fd);
+	printf("%s\n", line);
 	while (line)
 	{
+		printf("%s\n\n", "test");
 		printf("%s", line);
 		free(line);
 		line = get_next_line(fd);
