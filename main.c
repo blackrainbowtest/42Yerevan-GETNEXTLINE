@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	line = get_next_line(fd);
-	printf("%s\n", line);
+	printf("%p\n", line);
 	while (line)
 	{
 		printf("%s\n\n", "test");
