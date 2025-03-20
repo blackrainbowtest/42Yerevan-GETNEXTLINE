@@ -1,5 +1,15 @@
 #include "get_next_line.h"
 
+size_t	ft_strlen(const char *s)
+{
+	size_t	len;
+
+	len = 0;
+	while (NULL != s && s[len])
+		len++;
+	return (len);
+}
+
 char	*ft_strdup(const char *s)
 {
 	char	*str;
@@ -7,10 +17,10 @@ char	*ft_strdup(const char *s)
 	size_t	i;
 
 	len = 0;
-	while (s && s[len])
+	while (NULL != s && s[len])
 		len++;
 	str = (char *)malloc(len + 1);
-	if (str == NULL)
+	if (NULL == str)
 		return (NULL);
 	i = 0;
 	while (i < len)
@@ -22,39 +32,16 @@ char	*ft_strdup(const char *s)
 	return (str);
 }
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	len;
-
-	len = 0;
-	while (s && s[len])
-		len++;
-	return (len);
-}
-
-void	ft_strcpy(char *dst, const char *src)
-{
-	size_t	i;
-
-	i = 0;
-	while (src && src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-}
-
 void	ft_strcat(char *dst, const char *src)
 {
 	size_t	i;
 	size_t	j;
 
 	i = 0;
-	while (dst && dst[i])
+	while (NULL !=dst && dst[i])
 		i++;
 	j = 0;
-	while (src && src[j])
+	while (NULL != src && src[j])
 	{
 		dst[i + j] = src[j];
 		j++;
@@ -64,17 +51,16 @@ void	ft_strcat(char *dst, const char *src)
 
 char	*ft_strchr(const char *s, int c)
 {
-	size_t	i;
-
-	i = 0;
-	while (s && s[i])
+	if (NULL == s)
+		return (NULL);
+	while (*s)
 	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-		i++;
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
 	}
 	if (c == '\0')
-		return ((char *)&s[i]);
+		return ((char *)s)
 	return (NULL);
 }
 
