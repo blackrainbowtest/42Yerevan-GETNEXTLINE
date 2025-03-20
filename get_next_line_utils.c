@@ -5,7 +5,7 @@ size_t	ft_strlen(const char *s)
 	size_t	len;
 
 	len = 0;
-	while (NULL != s && s[len])
+	while (s != NULL && s[len])
 		len++;
 	return (len);
 }
@@ -17,10 +17,10 @@ char	*ft_strdup(const char *s)
 	size_t	i;
 
 	len = 0;
-	while (NULL != s && s[len])
+	while (s != NULL && s[len])
 		len++;
 	str = (char *)malloc(len + 1);
-	if (NULL == str)
+	if (str == NULL)
 		return (NULL);
 	i = 0;
 	while (i < len)
@@ -38,10 +38,10 @@ void	ft_strcat(char *dst, const char *src)
 	size_t	j;
 
 	i = 0;
-	while (NULL !=dst && dst[i])
+	while (dst != NULL && dst[i])
 		i++;
 	j = 0;
-	while (NULL != src && src[j])
+	while (src != NULL && src[j])
 	{
 		dst[i + j] = src[j];
 		j++;
@@ -51,7 +51,7 @@ void	ft_strcat(char *dst, const char *src)
 
 char	*ft_strchr(const char *s, int c)
 {
-	if (NULL == s)
+	if (s == NULL)
 		return (NULL);
 	while (*s)
 	{
