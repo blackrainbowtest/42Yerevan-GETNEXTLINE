@@ -76,3 +76,31 @@ char	*ft_get_first_line(char *s1)
 	result[i] = '\0';
 	return (result);
 }
+
+char	*ft_remove_read_line(char *s1)
+{
+	char	*result;
+	int		i;
+	int		j;
+
+	if (s1 == NULL)
+		return (NULL);
+	i = 0;
+	while (s1[i] && s1[i] != '\n')
+		i++;
+	if (!s1[i])
+	{
+		free(s1);
+		return (NULL);
+	}
+	result = malloc(sizeof(char) * (ft_strlen(s1) - i + 1));
+	if (!result)
+		return (NULL);
+	i++;
+	j = 0;
+	while (s1[i])
+		result[j++] = s1[i++];
+	result[j] = '\0';
+	free(s1);
+	return (result);
+}
