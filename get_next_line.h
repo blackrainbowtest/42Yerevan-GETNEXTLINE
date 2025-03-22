@@ -1,5 +1,5 @@
-#ifndef GET_NEXT_LINE_BONUS_H
-# define GET_NEXT_LINE_BONUS_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 /*
 * BUFFER_SIZE: size of the buffer to read the file

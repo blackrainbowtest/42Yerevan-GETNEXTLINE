@@ -14,12 +14,12 @@ size_t	ft_strlen(const char *s)
 }
 
 /*
-* ft_strchr: returns a pointer to the first occurrence of the character c in the string s
+* ft_strchr: returns a pointer to the first occ of the chr c in the string s
 */
 char	*ft_strchr(const char *s, int c)
 {
 	if (s == NULL || c < 0 || c > 255)
-    	return (NULL);
+		return (NULL);
 	while (*s)
 	{
 		if (*s == (char)c)
@@ -52,11 +52,11 @@ char	*ft_strjoin(char *s1, char *s2)
 		s1++;
 	}
 	while (*s2 != '\0')
-    {
-        *temp = *s2;
-        temp++;
-        s2++;
-    }
+	{
+		*temp = *s2;
+		temp++;
+		s2++;
+	}
 	*temp = '\0';
 	return (result);
 }
@@ -69,9 +69,7 @@ char	*ft_get_first_line(char *s1)
 	char	*result;
 	int		i;
 
-	if (s1 == NULL)
-		return (NULL);
-	if (s1[0] == '\0')
+	if (s1 == NULL || s1[0] == '\0')
 		return (NULL);
 	i = 0;
 	while (s1[i] && s1[i] != '\n')
@@ -112,11 +110,9 @@ char	*ft_remove_read_line(char *s1)
 	{
 		return (s1);
 	}
-	
 	result = malloc(sizeof(char) * (ft_strlen(s1) - i + 1 + 1));
 	if (!result)
 		return (NULL);
-	
 	i++;
 	j = 0;
 	while (s1[i])
