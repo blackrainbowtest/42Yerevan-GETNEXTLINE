@@ -1,5 +1,8 @@
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
+/*
+* ft_strlen: returns the length of the string
+*/
 size_t	ft_strlen(const char *s)
 {
 	size_t	len;
@@ -10,6 +13,9 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
+/*
+* ft_strchr: returns a pointer to the first occurrence of the character c in the string s
+*/
 char	*ft_strchr(const char *s, int c)
 {
 	if (s == NULL)
@@ -21,10 +27,13 @@ char	*ft_strchr(const char *s, int c)
 		s++;
 	}
 	if (c == '\0')
-		return ((char *)s)
+		return ((char *)s);
 	return (NULL);
 }
 
+/*
+* ft_strjoin: concatenates two strings
+*/
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;
@@ -53,6 +62,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (result);
 }
 
+/*
+* ft_get_first_line: returns the first line of the string
+*/
 char	*ft_get_first_line(char *s1)
 {
 	char	*result;
@@ -70,13 +82,22 @@ char	*ft_get_first_line(char *s1)
 		return (NULL);
 	i = 0;
 	while (s1[i] && s1[i] != '\n')
-		result[i] = s1[i++];
+	{
+		result[i] = s1[i];
+		i++;
+	}
 	if (s1[i] == '\n')
-		result[i] = s1[i++];
+	{
+		result[i] = s1[i];
+		i++;
+	}
 	result[i] = '\0';
 	return (result);
 }
 
+/*
+* ft_remove_read_line: removes the first line of the string
+*/
 char	*ft_remove_read_line(char *s1)
 {
 	char	*result;

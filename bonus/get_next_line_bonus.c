@@ -1,4 +1,4 @@
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	ft_delete_node(t_list **p_head, int fd)
 {
@@ -15,11 +15,7 @@ void	ft_delete_node(t_list **p_head, int fd)
 				prev->next = curr->next;
 			else
 				*p_head = curr->next;
-			if (curr->str_buf)
-			{
-				free(curr->str_buf);
-				curr->str_buf = NULL;
-			}
+			free(curr->str_buf);
 			free(curr);
 			return;
 		}
@@ -58,7 +54,6 @@ t_list	*get_or_create_node(t_list **p_head, int fd)
 char	*ft_read_line(t_list *p_head, t_list *node, int fd)
 {
 	char	*buffer;
-	char	*p_str_buff;
 	ssize_t	bytes_read;
 
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
@@ -70,29 +65,17 @@ char	*ft_read_line(t_list *p_head, t_list *node, int fd)
 		if (bytes_read <= 0)
 			break ;
 		buffer[bytes_read] = '\0';
-		p_str_buff = node->str_buf;
 		node->str_buf = ft_strjoin(node->str_buf, buffer);
-		free(p_str_buff);
 		if (!node->str_buf)
 			break ;
 	}
 	free(buffer);
-	if (bytes_read == 0 && node->str_buf && node->str_buf[0] != '\0')
-	{
-		buffer = node->str_buf;
-		node->str_buf = NULL;
-		return (buffer);
-	}
 	if (bytes_read < 0 || (bytes_read == 0 && (!node->str_buf || !node->str_buf[0])))
 	{
-		free(node->str_buf);
-		node->str_buf = NULL;
 		ft_delete_node(&p_head, fd);
 		return (NULL);
 	}
-	buffer = ft_get_first_line(node->str_buf);
-	node->str_buf = ft_remove_read_line(node->str_buf);
-	return (buffer);
+	return (ft_get_first_line(node->str_buf));
 }
 
 char	*get_next_line(int fd)

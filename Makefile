@@ -31,7 +31,19 @@ test: all
 	$(HIDE)printf "%s" "$(YELLOW)Start compiling: $(RESET)["
 	$(HIDE)$(CC) main.c gnl_tester.a -o my_program
 	$(HIDE)printf "%s\n" "$(GREEN)OK$(RESET)]"
-	$(HIDE)./my_program test_file1.txt test_file2.txt test_file3.txt
+	$(HIDE)./my_program test_file1.txt test_file2.txt
+	$(HIDE)printf "%s\n" "$(GREEN)Done with valgrind tests$(RESET)"
+	$(HIDE)printf "%s" "$(BLUE)Cleaning files: $(RESET)"
+	$(HIDE)make fclean
+	$(HIDE)printf "%s" "$(GREEN)Done: $(RESET)"
+
+leaks: all
+	$(HIDE)printf "%s" "$(YELLOW)Start compiling: $(RESET)["
+	$(HIDE)$(CC) main.c gnl_tester.a -o my_program
+	$(HIDE)printf "%s\n" "$(GREEN)OK$(RESET)]"
+	$(HIDE)printf "%s" "$(BLUE)Running tests with valgrind: $(RESET)"
+	$(HIDE)valgrind --leak-check=full --show-leak-kinds=all ./my_program test_file1.txt test_file2.txt test_file3.txt
+	$(HIDE)printf "%s\n" "$(GREEN)Done with valgrind tests$(RESET)"
 	$(HIDE)printf "%s" "$(BLUE)Cleaning files: $(RESET)"
 	$(HIDE)make fclean
 	$(HIDE)printf "%s" "$(GREEN)Done: $(RESET)"
