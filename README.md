@@ -15,3 +15,8 @@
 	<img alt="GitHub issues" src="https://img.shields.io/github/issues/blackrainbowtest/42Yerevan-GETNEXTLINE?color=orange" />
 	<img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/blackrainbowtest/42Yerevan-GETNEXTLINE?color=brightgreen" />
 </p>
+
+<p align="center">
+	<b><i>Use GNL tester to checkout your code</i></b><br>
+</p>
+https://github.com/Tripouille/gnlTester 
