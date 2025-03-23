@@ -47,7 +47,7 @@ char	*ft_remove_read_line(char *s1);
 */
 void	ft_delete_node(t_list **p_head, int fd);
 t_list	*get_or_create_node(t_list **p_head, int fd);
-char	*ft_read_line(t_list *node);
+char	*ft_read_line(t_list **head, t_list *node, ssize_t bytes_read, int fd);
 char	*get_next_line(int fd);
 ssize_t	read_and_append_data(int fd, t_list *node, char *buffer);
 

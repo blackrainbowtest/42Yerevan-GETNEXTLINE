@@ -18,35 +18,33 @@ int main(void)
         return (1);
     }
 
-    // printf("Reading from test_file1.txt:\n");
+    printf("Reading from test_file1.txt:\n");
     while ((line = get_next_line(fd1)) != NULL && maxCount-- > 0)
     {
         printf("%s", line);
 		// printf("\n%p\n", line);
         free(line);
-		maxCount--;
     }
     close(fd1);
     printf("\n.\n");
-	maxCount = 3;
-    // printf("\nReading from test_file2.txt:\n");
+	maxCount = 9;
+    printf("\nReading from test_file2.txt:\n");
     while ((line = get_next_line(fd2)) != NULL && maxCount-- > 0)
     {
         printf("%s", line);
+        // printf("maxCount: %d\n", maxCount);
         free(line);
-		maxCount--;
     }
     close(fd2);
 
-    printf("\n.\n");
+    // printf("\n.\n");
     maxCount = 3;
-    // printf("\nReading from test_file3.txt:\n");
+    printf("\nReading from test_file3.txt:\n");
     while ((line = get_next_line(fd3)) != NULL && maxCount-- > 0)
     {
         printf("%d", maxCount);
         printf("%s", line);
         free(line);
-        maxCount--;
     }
     close(fd3);
 

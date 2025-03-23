@@ -55,10 +55,24 @@ t_list	*get_or_create_node(t_list **p_head, int fd)
 	return (node);
 }
 
-char	*ft_read_line(t_list *node)
+char	*ft_read_line(t_list **head, t_list *node, ssize_t bytes_read, int fd)
 {
 	char	*buffer;
 
+	if (bytes_read <= 0 && (!node->str_buf || node->str_buf[0] == '\0'))
+	{
+		free(node->str_buf);
+		node->str_buf = NULL;
+		ft_delete_node(head, fd);
+		return (NULL);
+	}
+	if (bytes_read == 0 && node->str_buf)
+	{
+		buffer = ft_get_first_line(node->str_buf);
+		free(node->str_buf);
+		node->str_buf = NULL;
+		return (buffer);
+	}
 	if (!node->str_buf || node->str_buf[0] == '\0')
 		return (NULL);
 	buffer = ft_get_first_line(node->str_buf);
@@ -71,6 +85,8 @@ ssize_t	read_and_append_data(int fd, t_list *node, char *buffer)
 	ssize_t	bytes_read;
 	char	*temp;
 
+	if (fd < 0 || !node || !buffer)
+		return (-1);
 	while (!ft_strchr(node->str_buf, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -99,12 +115,5 @@ char	*get_next_line(int fd)
 		return (NULL);
 	bytes_read = read_and_append_data(fd, node, buffer);
 	free(buffer);
-	if (bytes_read <= 0 && (!node->str_buf || node->str_buf[0] == '\0'))
-	{
-		free(node->str_buf);
-		node->str_buf = NULL;
-		ft_delete_node(&head, fd);
-		return (NULL);
-	}
-	return (ft_read_line(node));
+	return (ft_read_line(&head, node, bytes_read, fd));
 }
