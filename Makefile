@@ -20,7 +20,7 @@ BUFFER_SIZE ?= 100
 
 # Request user input for BUFFER_SIZE
 set-buffer-size:
-	@echo "Enter BUFFER_SIZE (default 100):"
+	@echo "$(YELLOW)Enter $(BOLD)BUFFER_SIZE$(RESET)$(YELLOW) (default 100):$(RESET)"
 	@read size; \
 	if [ ! -z $$size ]; then \
 		echo "Setting BUFFER_SIZE to $$size"; \
@@ -40,7 +40,7 @@ $(NAME): $(OBJS)
 	$(HIDE)ar rcs $(NAME) $(OBJS)
 
 clean:
-	$(HIDE)rm -f $(OBJS)
+	$(HIDE)rm -f $(OBJS) buffer_size.txt
 
 fclean: clean
 	$(HIDE)rm -f $(NAME)
@@ -57,6 +57,7 @@ test: all
 	$(HIDE)printf "%s\n" "$(GREEN)Done with valgrind tests$(RESET)"
 	$(HIDE)printf "%s" "$(BLUE)Cleaning files: $(RESET)"
 	$(HIDE)make fclean
+	$(HIDE)rm -f $(PROGRAM)
 	$(HIDE)printf "%s" "$(GREEN)Done: $(RESET)"
 
 leaks: all
@@ -67,6 +68,7 @@ leaks: all
 	$(HIDE)printf "%s\n" "$(GREEN)Done with valgrind tests$(RESET)"
 	$(HIDE)printf "%s" "$(BLUE)Cleaning files: $(RESET)"
 	$(HIDE)make fclean
+	$(HIDE)rm -f $(PROGRAM)
 	$(HIDE)printf "%s" "$(GREEN)Done: $(RESET)"
 
 re: fclean all
