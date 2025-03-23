@@ -8,7 +8,6 @@ BOLD   = [1m
 NAME = gnl_tester.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-BUFFER_SIZE = -D BUFFER_SIZE=100
 
 SRCS = get_next_line.c get_next_line_utils.c
 OBJS = $(SRCS:.c=.o)
@@ -16,10 +15,26 @@ OBJS = $(SRCS:.c=.o)
 DEBUG ?= 0
 HIDE := $(if $(filter 0,$(DEBUG)),@,)
 
-%.o: %.c
-	$(HIDE)$(CC) $(BUFFER_SIZE) $(CFLAGS) -c $< -o $@
+# default value for BUFFER_SIZE
+BUFFER_SIZE ?= 100
 
-all: $(NAME)
+# Request user input for BUFFER_SIZE
+set-buffer-size:
+	@echo "Enter BUFFER_SIZE (default 100):"
+	@read size; \
+	if [ ! -z $$size ]; then \
+		echo "Setting BUFFER_SIZE to $$size"; \
+		echo $$size > buffer_size.txt; \
+	else \
+		echo "Using default BUFFER_SIZE = 100"; \
+		echo 100 > buffer_size.txt; \
+	fi
+	@echo "BUFFER_SIZE set to $$size"
+
+%.o: %.c
+	$(HIDE)$(CC) -D BUFFER_SIZE=$(shell cat buffer_size.txt) $(CFLAGS) -c $< -o $@
+
+all: set-buffer-size $(NAME)
 
 $(NAME): $(OBJS)
 	$(HIDE)ar rcs $(NAME) $(OBJS)
@@ -46,7 +61,7 @@ test: all
 
 leaks: all
 	$(HIDE)printf "%s" "$(YELLOW)Start compiling: $(RESET)["
-	$(HIDE)$(CC) $(BUFFER_SIZE) $(CFLAGS) main.c gnl_tester.a -o $(PROGRAM)
+	$(HIDE)$(CC) $(CFLAGS) main.c gnl_tester.a -o $(PROGRAM)
 	$(HIDE)printf "%s\n" "$(GREEN)OK$(RESET)]"
 	$(HIDE)$(VALGRIND_CMD) ./$(PROGRAM) $(TEST_FILES)
 	$(HIDE)printf "%s\n" "$(GREEN)Done with valgrind tests$(RESET)"

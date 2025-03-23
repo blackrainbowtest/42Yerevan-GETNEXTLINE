@@ -15,7 +15,6 @@ int main(int argc, char **argv)
         fprintf(stderr, "Usage: %s <file1> <file2> ... <fileN>\n", argv[0]);
         return (1);
     }
-
     for (int i = 1; i < argc; i++)
     {
         char *line;

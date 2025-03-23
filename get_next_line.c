@@ -118,7 +118,6 @@ char	*get_next_line(int fd)
 	t_list			*node;
 	char			*buffer;
 	ssize_t			bytes_read;
-printf("BUFFER_SIZE: %d\n", BUFFER_SIZE);
 	node = get_or_create_node(&head, fd);
 	if (!node)
 		return (NULL);
