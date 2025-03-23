@@ -26,9 +26,9 @@ int main(void)
         free(line);
     }
     close(fd1);
-    printf("\n.\n");
+    printf("\n...EOF...\n");
 	maxCount = 9;
-    printf("\nReading from test_file2.txt:\n");
+    printf("Reading from test_file2.txt:\n");
     while ((line = get_next_line(fd2)) != NULL && maxCount-- > 0)
     {
         printf("%s", line);
@@ -37,9 +37,9 @@ int main(void)
     }
     close(fd2);
 
-    // printf("\n.\n");
+    printf("\n..EOF...\n");
     maxCount = 3;
-    printf("\nReading from test_file3.txt:\n");
+    printf("Reading from test_file3.txt:\n");
     while ((line = get_next_line(fd3)) != NULL && maxCount-- > 0)
     {
         printf("%d", maxCount);
@@ -47,6 +47,6 @@ int main(void)
         free(line);
     }
     close(fd3);
-
+    printf("\n..EOF...\n");
     return (0);
 }
