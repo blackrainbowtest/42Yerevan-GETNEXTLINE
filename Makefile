@@ -2,10 +2,13 @@ YELLOW = [33m
 GREEN  = [32m
 BLUE   = [34m
 RESET  = [0m
+RED    = [31m
+BOLD   = [1m
 
 NAME = gnl_tester.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+BUFFER_SIZE = -D BUFFER_SIZE=100
 
 SRCS = get_next_line.c get_next_line_utils.c
 OBJS = $(SRCS:.c=.o)
@@ -14,7 +17,7 @@ DEBUG ?= 0
 HIDE := $(if $(filter 0,$(DEBUG)),@,)
 
 %.o: %.c
-	$(HIDE)$(CC) $(CFLAGS) -c $< -o $@
+	$(HIDE)$(CC) $(BUFFER_SIZE) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 
@@ -27,11 +30,15 @@ clean:
 fclean: clean
 	$(HIDE)rm -f $(NAME)
 
+VALGRIND_CMD = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes
+PROGRAM = my_program
+TEST_FILES = test_file1.txt test_file2.txt test_file3.txt
+
 test: all
-	$(HIDE)printf "%s" "$(YELLOW)Start compiling: $(RESET)["
-	$(HIDE)$(CC) main.c gnl_tester.a -o my_program
+	$(HIDE)printf "%s" "$(YELLOW)Start compiling: $(RESET)[" 
+	$(HIDE)$(CC) $(CFLAGS) main.c gnl_tester.a -o my_program
 	$(HIDE)printf "%s\n" "$(GREEN)OK$(RESET)]"
-	$(HIDE)./my_program test_file1.txt test_file2.txt
+	$(HIDE)./$(PROGRAM) $(TEST_FILES)
 	$(HIDE)printf "%s\n" "$(GREEN)Done with valgrind tests$(RESET)"
 	$(HIDE)printf "%s" "$(BLUE)Cleaning files: $(RESET)"
 	$(HIDE)make fclean
@@ -39,10 +46,9 @@ test: all
 
 leaks: all
 	$(HIDE)printf "%s" "$(YELLOW)Start compiling: $(RESET)["
-	$(HIDE)$(CC) main.c gnl_tester.a -o my_program
+	$(HIDE)$(CC) $(BUFFER_SIZE) $(CFLAGS) main.c gnl_tester.a -o $(PROGRAM)
 	$(HIDE)printf "%s\n" "$(GREEN)OK$(RESET)]"
-	$(HIDE)printf "%s" "$(BLUE)Running tests with valgrind: $(RESET)"
-	$(HIDE)valgrind --leak-check=full --show-leak-kinds=all ./my_program test_file1.txt test_file2.txt test_file3.txt
+	$(HIDE)$(VALGRIND_CMD) ./$(PROGRAM) $(TEST_FILES)
 	$(HIDE)printf "%s\n" "$(GREEN)Done with valgrind tests$(RESET)"
 	$(HIDE)printf "%s" "$(BLUE)Cleaning files: $(RESET)"
 	$(HIDE)make fclean

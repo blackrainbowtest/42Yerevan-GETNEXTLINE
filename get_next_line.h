@@ -20,13 +20,6 @@
 #  define BUFFER_SIZE 10
 # endif
 
-/*
-* MAX_OPEN: maximum number of file descriptors
-*/
-# ifndef MAX_OPEN
-#  define MAX_OPEN 256
-# endif
-
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>

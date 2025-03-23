@@ -1,52 +1,42 @@
 #include "get_next_line.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /*
 * main.c tests the get_next_line function
 */
 
-int main(void)
+int main(int argc, char **argv)
 {
-    char *line;
-	int maxCount = 5;
-    int fd1 = open("test_file1.txt", O_RDONLY);
-    int fd2 = open("test_file2.txt", O_RDONLY);
-    int fd3 = open("test_file3.txt", O_RDONLY);
-    
-    if (fd1 == -1 || fd2 == -1 || fd3 == -1)
+    if (argc < 2)
     {
-        perror("Error opening file");
+        fprintf(stderr, "Usage: %s <file1> <file2> ... <fileN>\n", argv[0]);
         return (1);
     }
 
-    printf("Reading from test_file1.txt:\n");
-    while ((line = get_next_line(fd1)) != NULL && maxCount-- > 0)
+    for (int i = 1; i < argc; i++)
     {
-        printf("%s", line);
-		// printf("\n%p\n", line);
-        free(line);
-    }
-    close(fd1);
-    printf("\n...EOF...\n");
-	maxCount = 9;
-    printf("Reading from test_file2.txt:\n");
-    while ((line = get_next_line(fd2)) != NULL && maxCount-- > 0)
-    {
-        printf("%s", line);
-        // printf("maxCount: %d\n", maxCount);
-        free(line);
-    }
-    close(fd2);
+        char *line;
+        int maxCount = 5;
+        int fd = open(argv[i], O_RDONLY);
 
-    printf("\n..EOF...\n");
-    maxCount = 3;
-    printf("Reading from test_file3.txt:\n");
-    while ((line = get_next_line(fd3)) != NULL && maxCount-- > 0)
-    {
-        printf("%d", maxCount);
-        printf("%s", line);
-        free(line);
+        if (fd == -1)
+        {
+            perror("Error opening file");
+            continue;
+        }
+
+        printf("Reading from %s:\n", argv[i]);
+        while ((line = get_next_line(fd)) != NULL && maxCount-- > 0)
+        {
+            printf("%s", line);
+            free(line);
+        }
+        close(fd);
+        printf("\n...EOF...\n");
     }
-    close(fd3);
-    printf("\n..EOF...\n");
+
     return (0);
 }
