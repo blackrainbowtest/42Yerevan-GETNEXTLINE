@@ -7,13 +7,13 @@ int main(void)
     printf("%d", BUFFER_SIZE);
     if (fd < 0)
     {
-        printf("Ошибка открытия файла\n");
+        printf("file open error\n");
         return 1;
     }
 
     while ((line = get_next_line(fd)) != NULL)
     {
-        printf("Получено: %s", line);
+        printf("get: %s", line);
         free(line);
     }
     

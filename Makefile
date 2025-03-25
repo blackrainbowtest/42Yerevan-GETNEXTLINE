@@ -46,6 +46,7 @@ fclean: clean
 	$(HIDE)rm -f $(NAME)
 
 VALGRIND_CMD = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes
+FSANITIZE_CMD = -fsanitize=address
 PROGRAM = my_program
 TEST_FILES = test_file1.txt test_file2.txt test_file3.txt
 
@@ -64,7 +65,7 @@ leaks: all
 	$(HIDE)printf "%s" "$(YELLOW)Start compiling: $(RESET)["
 	$(HIDE)$(CC) $(CFLAGS) main.c gnl_tester.a -o $(PROGRAM)
 	$(HIDE)printf "%s\n" "$(GREEN)OK$(RESET)]"
-	$(HIDE)$(VALGRIND_CMD) ./$(PROGRAM) $(TEST_FILES)
+	$(HIDE)$(FSANITIZE_CMD) ./$(PROGRAM) $(TEST_FILES)
 	$(HIDE)printf "%s\n" "$(GREEN)Done with valgrind tests$(RESET)"
 	$(HIDE)printf "%s" "$(BLUE)Cleaning files: $(RESET)"
 	$(HIDE)make fclean
