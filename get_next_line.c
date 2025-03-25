@@ -118,6 +118,9 @@ char	*get_next_line(int fd)
 	t_list			*node;
 	char			*buffer;
 	ssize_t			bytes_read;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	node = get_or_create_node(&head, fd);
 	if (!node)
 		return (NULL);
@@ -126,5 +129,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	bytes_read = read_and_append_data(fd, node, buffer);
 	free(buffer);
+	if (bytes_read == -1)
+    {
+        ft_delete_node(&head, fd);
+        return (NULL);
+    }
 	return (ft_read_line(&head, node, bytes_read, fd));
 }
