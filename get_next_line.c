@@ -128,6 +128,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	bytes_read = 0;
 	node = get_or_create_node(&head, fd);
 	if (!node)
 		return (NULL);
