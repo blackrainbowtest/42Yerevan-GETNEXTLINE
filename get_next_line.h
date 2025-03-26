@@ -44,8 +44,8 @@ typedef struct s_list
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
-char	*ft_get_first_line(char *s1);
-char	*ft_remove_read_line(char *s1);
+char	*ft_get_first_line(char *s);
+char	*ft_remove_read_line(char *s);
 
 /*
 * get_next_line.c

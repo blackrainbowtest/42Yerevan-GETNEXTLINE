@@ -17,12 +17,14 @@
 */
 size_t	ft_strlen(const char *s)
 {
-	size_t	len;
+	size_t	i;
 
-	len = 0;
-	while (s != NULL && s[len])
-		len++;
-	return (len);
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }
 
 /*
@@ -30,7 +32,7 @@ size_t	ft_strlen(const char *s)
 */
 char	*ft_strchr(const char *s, int c)
 {
-	if (s == NULL || c < 0 || c > 255)
+	if (!s)
 		return (NULL);
 	while (*s)
 	{
@@ -49,23 +51,22 @@ char	*ft_strchr(const char *s, int c)
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;
-	char	*temp;
 	size_t	len1;
 	size_t	len2;
+	char	*temp;
 
-	len1 = 0;
-	len2 = 0;
-	if (s1)
-		len1 = ft_strlen(s1);
-	if (s2)
-		len2 = ft_strlen(s2);
+	len1 = (s1 != NULL) * ft_strlen(s1);
+	len2 = (s2 != NULL) * ft_strlen(s2);
 	result = malloc(sizeof(char) * (len1 + len2 + 1));
 	if (!result)
 		return (NULL);
 	temp = result;
 	if (s1)
+	{
 		while (*s1)
 			*temp++ = *s1++;
+		free(s1);
+	}
 	if (s2)
 		while (*s2)
 			*temp++ = *s2++;
@@ -76,60 +77,55 @@ char	*ft_strjoin(char *s1, char *s2)
 /*
 * ft_get_first_line: returns the first line of the string
 */
-char	*ft_get_first_line(char *s1)
+char	*ft_get_first_line(char *s)
 {
-	char	*result;
 	int		i;
+	char	*str;
 
-	if (s1 == NULL || s1[0] == '\0')
+	if (!s || !s[0])
 		return (NULL);
 	i = 0;
-	while (s1[i] && s1[i] != '\n')
+	while (s[i] && s[i] != '\n')
 		i++;
-	result = malloc(sizeof(char) * (i + 2));
-	if (result == NULL)
+	str = malloc(i + 2);
+	if (!str)
 		return (NULL);
-	i = 0;
-	while (s1[i] && s1[i] != '\n')
+	str[i + 1] = '\0';
+	while (i >= 0)
 	{
-		result[i] = s1[i];
-		i++;
+		str[i] = s[i];
+		i--;
 	}
-	if (s1[i] == '\n')
-	{
-		result[i] = s1[i];
-		i++;
-	}
-	result[i] = '\0';
-	return (result);
+	return (str);
 }
 
 /*
 * ft_remove_read_line: removes the first line of the string
 */
-char	*ft_remove_read_line(char *s1)
+char	*ft_remove_read_line(char *s)
 {
 	char	*result;
 	int		i;
 	int		j;
 
-	if (s1 == NULL)
+	if (!s || !s[0])
 		return (NULL);
 	i = 0;
-	while (s1[i] && s1[i] != '\n')
+	while (s[i] && s[i] != '\n')
 		i++;
-	if (s1[i] == '\0')
+	if (!s[i])
 	{
-		return (s1);
+		free(s);
+		return (NULL);
 	}
-	result = malloc(sizeof(char) * (ft_strlen(s1) - i + 1 + 1));
+	result = malloc(ft_strlen(s) - i + 1);
 	if (!result)
 		return (NULL);
 	i++;
 	j = 0;
-	while (s1[i])
-		result[j++] = s1[i++];
+	while (s[i])
+		result[j++] = s[i++];
 	result[j] = '\0';
-	free(s1);
+	free(s);
 	return (result);
 }
