@@ -125,14 +125,15 @@ char	*get_next_line(int fd)
 	if (!node)
 		return (NULL);
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	buffer[0] = '\0';
 	if (!buffer)
 		return (NULL);
 	bytes_read = read_and_append_data(fd, node, buffer);
 	free(buffer);
 	if (bytes_read == -1)
-    {
-        ft_delete_node(&head, fd);
-        return (NULL);
-    }
+	{
+		ft_delete_node(&head, fd);
+		return (NULL);
+	}
 	return (ft_read_line(&head, node, bytes_read, fd));
 }
