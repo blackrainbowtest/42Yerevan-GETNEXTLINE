@@ -65,7 +65,7 @@ leaks: all
 	$(HIDE)printf "%s" "$(YELLOW)Start compiling: $(RESET)["
 	$(HIDE)$(CC) $(CFLAGS) main.c gnl_tester.a -o $(PROGRAM)
 	$(HIDE)printf "%s\n" "$(GREEN)OK$(RESET)]"
-	$(HIDE)$(FSANITIZE_CMD) ./$(PROGRAM) $(TEST_FILES)
+	$(HIDE)$(VALGRIND_CMD) ./$(PROGRAM) $(TEST_FILES)
 	$(HIDE)printf "%s\n" "$(GREEN)Done with valgrind tests$(RESET)"
 	$(HIDE)printf "%s" "$(BLUE)Cleaning files: $(RESET)"
 	$(HIDE)make fclean

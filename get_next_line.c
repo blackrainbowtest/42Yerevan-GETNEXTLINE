@@ -102,11 +102,18 @@ ssize_t	read_and_append_data(int fd, t_list *node, char *buffer)
 	while (!ft_strchr(node->str_buf, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read <= 0)
-			break ;
+		if (bytes_read < 0)
+			return (-1);
+		if (bytes_read == 0)
+			break;
 		buffer[bytes_read] = '\0';
 		temp = node->str_buf;
 		node->str_buf = ft_strjoin(node->str_buf, buffer);
+		if (!node->str_buf)
+		{
+			free(temp);
+			return (-1);
+		}
 		free(temp);
 	}
 	return (bytes_read);
@@ -125,9 +132,9 @@ char	*get_next_line(int fd)
 	if (!node)
 		return (NULL);
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	buffer[0] = '\0';
 	if (!buffer)
 		return (NULL);
+	buffer[0] = '\0';
 	bytes_read = read_and_append_data(fd, node, buffer);
 	free(buffer);
 	if (bytes_read == -1)
