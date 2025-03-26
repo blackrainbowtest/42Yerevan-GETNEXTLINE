@@ -50,25 +50,25 @@ char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;
 	char	*temp;
+	size_t	len1;
+	size_t	len2;
 
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	result = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (result == NULL)
+	len1 = 0;
+	len2 = 0;
+	if (s1)
+		len1 = ft_strlen(s1);
+	if (s2)
+		len2 = ft_strlen(s2);
+	result = malloc(sizeof(char) * (len1 + len2 + 1));
+	if (!result)
 		return (NULL);
 	temp = result;
-	while (*s1 != '\0')
-	{
-		*temp = *s1;
-		temp++;
-		s1++;
-	}
-	while (*s2 != '\0')
-	{
-		*temp = *s2;
-		temp++;
-		s2++;
-	}
+	if (s1)
+		while (*s1)
+			*temp++ = *s1++;
+	if (s2)
+		while (*s2)
+			*temp++ = *s2++;
 	*temp = '\0';
 	return (result);
 }

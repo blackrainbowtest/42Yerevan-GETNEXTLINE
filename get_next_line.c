@@ -137,7 +137,7 @@ char	*get_next_line(int fd)
 	buffer[0] = '\0';
 	bytes_read = read_and_append_data(fd, node, buffer);
 	free(buffer);
-	if (bytes_read == -1)
+	if (bytes_read == -1 || !node->str_buf || !*node->str_buf)
 	{
 		ft_delete_node(&head, fd);
 		return (NULL);
