@@ -15,32 +15,16 @@ OBJS = $(SRCS:.c=.o)
 DEBUG ?= 0
 HIDE := $(if $(filter 0,$(DEBUG)),@,)
 
-# default value for BUFFER_SIZE
-BUFFER_SIZE ?= 100
-
-# Request user input for BUFFER_SIZE
-set-buffer-size:
-	@echo "$(YELLOW)Enter $(BOLD)BUFFER_SIZE$(RESET)$(YELLOW) (default 100):$(RESET)"
-	@read size; \
-	if [ ! -z $$size ]; then \
-		echo "Setting BUFFER_SIZE to $$size"; \
-		echo $$size > buffer_size.txt; \
-	else \
-		echo "Using default BUFFER_SIZE = 100"; \
-		echo 100 > buffer_size.txt; \
-	fi
-	@echo "BUFFER_SIZE set to $$size"
-
 %.o: %.c
-	$(HIDE)$(CC) -D BUFFER_SIZE=$(shell cat buffer_size.txt) $(CFLAGS) -c $< -o $@
+	$(HIDE)$(CC) -D BUFFER_SIZE=50 $(CFLAGS) -c $< -o $@
 
-all: set-buffer-size $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(HIDE)ar rcs $(NAME) $(OBJS)
 
 clean:
-	$(HIDE)rm -f $(OBJS) buffer_size.txt
+	$(HIDE)rm -f $(OBJS)
 
 fclean: clean
 	$(HIDE)rm -f $(NAME)

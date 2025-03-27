@@ -1,10 +1,12 @@
 #include "get_next_line.h"
+# include <fcntl.h>
+# include <limits.h>
+# include <stdio.h>
 
 int main(void)
 {
     int fd = open("test.txt", O_RDONLY);
     char *line;
-    printf("%d", BUFFER_SIZE);
     if (fd < 0)
     {
         printf("file open error\n");
