@@ -1,5 +1,5 @@
 <h1 align="center">
-	42Yerevan-GETNEXTLINE
+	42Yerevan-GETNEXTLINE with struct (list)
 </h1>
 
 <p align="center">
