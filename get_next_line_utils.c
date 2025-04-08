@@ -86,14 +86,15 @@ char	*ft_get_first_line(char *s)
 	i = 0;
 	while (s[i] && s[i] != '\n')
 		i++;
-	str = malloc(i + 2);
+	i += (s[i] == '\n');
+	str = malloc(i + 1);
 	if (!str)
 		return (NULL);
-	str[i + 1] = '\0';
-	while (i >= 0)
+	str[i] = '\0';
+	while (i > 0)
 	{
-		str[i] = s[i];
 		i--;
+		str[i] = s[i];
 	}
 	return (str);
 }
